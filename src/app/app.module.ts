@@ -12,11 +12,13 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AuthService } from './services/auth.service';
 import { MaterialModule } from './material/material.module';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TopBarComponent
+    TopBarComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
