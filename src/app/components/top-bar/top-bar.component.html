@@ -1,0 +1,13 @@
+<mat-toolbar color="primary" style="position:fixed; z-index: 100; top: 0">
+  <a [routerLink]="'/'" class="flex-fill">
+    Raterator
+  </a>
+  <a *ngIf="(auth.user$ | async) as user; else loggedOut"
+        [routerLink]="'/user-profile'">
+    <img class="avatar" [src]="user.photoURL">
+  </a>
+
+  <ng-template #loggedOut>
+    <a href="#" (click)="auth.googleSignin()">Log In</a>
+  </ng-template>
+</mat-toolbar>
