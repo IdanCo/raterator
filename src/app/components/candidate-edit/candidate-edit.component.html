@@ -21,17 +21,26 @@
     <mat-error *ngIf="formGroup.get('title')?.hasError('required')"> Please set a title </mat-error>
   </mat-form-field>
 
-  <!--<mat-form-field>-->
-    <!--<ngx-mat-file-input #removableInput formControlName="image" placeholder="Image" [accept]="'.jpg'"></ngx-mat-file-input>-->
-    <!--<button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">-->
-      <!--<mat-icon>clear</mat-icon>-->
-    <!--</button>-->
-    <!--<mat-error *ngIf="formGroup.get('image')?.hasError('required')"> Please select a file </mat-error>-->
-    <!--<mat-error *ngIf="formGroup.get('image')?.hasError('maxContentSize')">-->
-      <!--The total size must not exceed {{ formGroup.get('image')?.getError('maxContentSize').maxSize | byteFormat }}-->
-      <!--({{ formGroup.get('image')?.getError('maxContentSize').actualSize | byteFormat }}).-->
-    <!--</mat-error>-->
-  <!--</mat-form-field>-->
+  <mat-form-field *ngIf="formGroup.contains('image') else existingImage">
+    <ngx-mat-file-input #removableInput formControlName="image" placeholder="Image" [accept]="'.jpg'"></ngx-mat-file-input>
+    <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <mat-error *ngIf="formGroup.get('image')?.hasError('required')"> Please select a file </mat-error>
+    <mat-error *ngIf="formGroup.get('image')?.hasError('maxContentSize')">
+      The total size must not exceed {{ formGroup.get('image')?.getError('maxContentSize').maxSize | byteFormat }}
+      ({{ formGroup.get('image')?.getError('maxContentSize').actualSize | byteFormat }}).
+    </mat-error>
+  </mat-form-field>
+
+  <ng-template #existingImage>
+    <div class="existing-image mb-4">
+      <img [src]="formGroup.get('imageURL').value">
+      <button mat-mini-fab>
+        <mat-icon (click)="removeExistingImage()">delete</mat-icon>
+      </button>
+    </div>
+  </ng-template>
 
   <mat-form-field>
     <textarea matInput placeholder="Description" formControlName="description"></textarea>

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Overlay } from '@angular/cdk/overlay';
 import { AuthService } from '../../services/auth.service';
 import { FileValidator } from 'ngx-material-file-input';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Candidate } from '../../types/candidate.model';
 import { Observable } from 'rxjs';
@@ -19,14 +18,12 @@ import { Observable } from 'rxjs';
 })
 export class CandidateEditComponent implements OnInit {
   formGroup: FormGroup;
-  candidateDoc: AngularFirestoreDocument<Candidate>;
   candidate$: Observable<Candidate>;
 
   constructor(private fb: FormBuilder,
               private router: Router,
               private db: AngularFirestore,
               private storage: AngularFireStorage,
-              private overlay: Overlay,
               private auth: AuthService) {
     this.buildForm();
   }
@@ -34,8 +31,13 @@ export class CandidateEditComponent implements OnInit {
   ngOnInit() {
     this.candidate$ = this.auth.user$.pipe(
       switchMap(user => this.db.doc<Candidate>(`candidates/${user.uid}`).valueChanges()),
-      filter(candidate => !!candidate),
-      tap(candidate => this.formGroup.patchValue(candidate))
+      tap(candidate => {
+        if (candidate) {
+          this.formGroup.patchValue(candidate)
+        } else {
+          this.addImageField()
+        }
+      }),
     );
   }
 
@@ -43,15 +45,21 @@ export class CandidateEditComponent implements OnInit {
     this.formGroup = this.fb.group({
       title: ['', Validators.required],
       description: [''],
-      // image: ['', [Validators.required, FileValidator.maxContentSize(10485760)]]
+      imageURL: ['']
     });
   }
 
-  onSubmit(formGroup: FormGroup) {
+  uploadFile(file: File) {
+    const path = `candidates/${Date.now()}_${file.name}`;
+    const ref = this.storage.ref(path);
+    return this.storage.upload(path, file)
+      .then(() => ref.getDownloadURL().toPromise());
+  }
+
+  async onSubmit(formGroup: FormGroup) {
     if (!formGroup.valid) return;
 
     const candidatesCollection = this.db.collection<Candidate>('candidates');
-
     const candidate: Candidate = {
       title: this.formGroup.value.title,
       description: this.formGroup.value.description,
@@ -59,9 +67,24 @@ export class CandidateEditComponent implements OnInit {
       lastUpdate: firebase.firestore.Timestamp.now()
     };
 
+    if (formGroup.contains('image')) {
+      const file = formGroup.get('image').value.files[0] as File;
+      candidate.imageURL = await this.uploadFile(file);
+    } else {
+      candidate.imageURL = formGroup.get('imageURL').value;
+    }
+
     candidatesCollection.doc(this.auth.user.uid).set(candidate)
-      .then(() => {
-        this.router.navigate(['/']);
-      });
+      .then(() => this.router.navigate(['/']));
+  }
+
+  removeExistingImage() {
+    this.addImageField();
+  }
+
+  addImageField() {
+    const image = new FormControl('');
+    image.setValidators([Validators.required, FileValidator.maxContentSize(10485760)]);
+    this.formGroup.addControl('image', image);
   }
 }
