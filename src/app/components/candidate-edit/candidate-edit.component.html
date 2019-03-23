@@ -1,0 +1,42 @@
+<ng-container
+  *ngIf="candidate$ | async; then edit; else add">
+</ng-container>
+
+<ng-template #edit>
+  <h1 class="mb-5">Edit Candidate</h1>
+</ng-template>
+<ng-template #add>
+  <h1 class="mb-5">Add Candidate</h1>
+</ng-template>
+
+
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup)" *ngIf="auth.user$ | async as user">
+
+  <mat-form-field>
+    <input matInput placeholder="Name" [value]="user.displayName" disabled>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Title" formControlName="title">
+    <mat-error *ngIf="formGroup.get('title')?.hasError('required')"> Please set a title </mat-error>
+  </mat-form-field>
+
+  <!--<mat-form-field>-->
+    <!--<ngx-mat-file-input #removableInput formControlName="image" placeholder="Image" [accept]="'.jpg'"></ngx-mat-file-input>-->
+    <!--<button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">-->
+      <!--<mat-icon>clear</mat-icon>-->
+    <!--</button>-->
+    <!--<mat-error *ngIf="formGroup.get('image')?.hasError('required')"> Please select a file </mat-error>-->
+    <!--<mat-error *ngIf="formGroup.get('image')?.hasError('maxContentSize')">-->
+      <!--The total size must not exceed {{ formGroup.get('image')?.getError('maxContentSize').maxSize | byteFormat }}-->
+      <!--({{ formGroup.get('image')?.getError('maxContentSize').actualSize | byteFormat }}).-->
+    <!--</mat-error>-->
+  <!--</mat-form-field>-->
+
+  <mat-form-field>
+    <textarea matInput placeholder="Description" formControlName="description"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" [disabled]="!formGroup.valid">Submit</button>
+
+</form>

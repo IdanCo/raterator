@@ -1,9 +1,9 @@
 <div *ngIf="auth.user$ | async as user">
   <h3 class="my-5">Hi {{ user.displayName }}!</h3>
-  <button [routerLink]="['/add-candidate']"
+  <button [routerLink]="['/candidate']"
           class="mb-3"
           mat-raised-button
-          color="primary">Add Your Costume!</button>
+          color="primary">Edit Your Candidacy!</button>
   <br/>
   <button mat-button color="warn" (click)="auth.signOut()">Logout</button>
 </div>

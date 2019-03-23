@@ -13,16 +13,21 @@ import { AuthService } from './services/auth.service';
 import { MaterialModule } from './material/material.module';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { CandidateEditComponent } from './components/candidate-edit/candidate-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CandidateEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
