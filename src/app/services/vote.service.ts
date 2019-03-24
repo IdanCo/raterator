@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Candidate } from '../types/candidate.model';
 
@@ -10,23 +9,35 @@ import { Candidate } from '../types/candidate.model';
 export class VoteService {
 
   constructor(private db: AngularFirestore,
-              private snackBar: MatSnackBar,
-              private auth: AuthService) { }
+              private snackBar: MatSnackBar) { }
 
-  setVote(candidate: Candidate, vote: number) {
-    if (!this.auth.user) {
+  setVote(candidate: Candidate, user: User, vote: number) {
+    if (!user) {
       this.snackBar.open('Please login to vote');
       return;
     }
 
-    candidate.votes = candidate.votes || {};
+    return Promise.all([
+      this.updateCandidateVotes(candidate, user, vote),
+      this.updateUserVotes(user, vote)
+    ])
+  }
 
-    let currentVote = (candidate.votes[this.auth.user.uid] || 0) + vote;
+  updateCandidateVotes(candidate: Candidate, user: User, vote: number) {
+    candidate.votes = candidate.votes || {};
+    let currentVote = (candidate.votes[user.uid] || 0) + vote;
     if (currentVote < 0) currentVote = 0;
 
-    candidate.votes[this.auth.user.uid] = currentVote;
+    candidate.votes[user.uid] = currentVote;
+    candidate.totalVotes = (candidate.totalVotes || 0) + vote;
 
-    this.db.doc<Candidate>(`candidates/${candidate.user.uid}`).update(candidate)
+    return this.db.doc<Candidate>(`candidates/${candidate.user.uid}`).update(candidate);
+  }
 
+  updateUserVotes(user: User, vote: number) {
+    let userTotalVotes = (user.totalVotes || 0) + vote;
+    if (userTotalVotes < 0) userTotalVotes = 0;
+
+    return this.db.doc<User>(`users/${user.uid}`).update({ totalVotes: userTotalVotes });
   }
 }

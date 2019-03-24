@@ -4,4 +4,5 @@ interface User {
   photoURL?: string;
   displayName?: string;
   myCustomData?: string;
+  totalVotes?: number;
 }

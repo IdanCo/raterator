@@ -12,7 +12,7 @@
         </button>
       </ng-container>
       <ng-template #rating>
-        <button (click)="onVote(1)" mat-mini-fab color="primary" [matBadge]="0" matBadgePosition="above after" matBadgeColor="accent">
+        <button (click)="onVote(1)" mat-mini-fab color="primary" [matBadge]="candidate.votes ? (candidate.votes[auth.user?.uid] || 0) : 0" matBadgePosition="above after" matBadgeColor="accent">
           <mat-icon>thumb_up</mat-icon>
         </button>
         <button (click)="onVote(-1)" mat-mini-fab color="accent">
@@ -20,20 +20,6 @@
         </button>
       </ng-template>
     </mat-card-actions>
-
-    <!--<mat-card-actions class="ml-auto pr-2" *ngIf="!(auth.user$ | async)">-->
-      <!--<button (click)="notLoggedIn()" mat-mini-fab>-->
-        <!--<mat-icon>thumb_up</mat-icon>-->
-      <!--</button>-->
-    <!--</mat-card-actions>-->
-    <!--<mat-card-actions class="ml-auto pr-2" *ngIf="candidate.user.uid !== (auth.user$ | async)?.uid && ratingService.rating$ | async as rating">-->
-      <!--<button (click)="onUpVote()" mat-mini-fab color="primary" [matBadge]="rating[candidate.user.uid] || 0" matBadgePosition="above after" matBadgeColor="accent">-->
-        <!--<mat-icon>thumb_up</mat-icon>-->
-      <!--</button>-->
-      <!--<button (click)="onDownVote()" mat-mini-fab color="accent">-->
-        <!--<mat-icon>thumb_down</mat-icon>-->
-      <!--</button>-->
-    <!--</mat-card-actions>-->
   </mat-card-header>
   <img mat-card-image [src]="candidate.imageURL" [alt]="candidate.title">
   <mat-card-content>

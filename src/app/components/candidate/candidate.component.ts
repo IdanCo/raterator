@@ -18,7 +18,7 @@ export class CandidateComponent implements OnInit {
   }
 
   onVote(vote: number) {
-    this.voteService.setVote(this.candidate, vote);
+    this.voteService.setVote(this.candidate, this.auth.user, vote);
   }
 
 }
