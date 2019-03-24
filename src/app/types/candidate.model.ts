@@ -6,8 +6,8 @@ export interface Candidate {
   description: string;
   imageURL?: string;
   lastUpdate: firebase.firestore.Timestamp;
-  totalRating?: number;
-  rating?: {
+  totalVotes?: number;
+  votes?: {
     [key: string]: number;
   };
 }

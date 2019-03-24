@@ -5,11 +5,22 @@
     </div>
     <mat-card-title>{{ candidate.user.displayName }}</mat-card-title>
     <mat-card-subtitle>{{ candidate.title }}</mat-card-subtitle>
-    <!--<mat-card-actions class="ml-auto pr-2" *ngIf="candidate.user.uid === (auth.user$ | async)?.uid">-->
-      <!--<button [routerLink]="['/add-candidate']"  mat-mini-fab color="primary">-->
-        <!--<mat-icon>create</mat-icon>-->
-      <!--</button>-->
-    <!--</mat-card-actions>-->
+    <mat-card-actions class="ml-auto pr-2">
+      <ng-container *ngIf="candidate.user.uid === auth.user?.uid; else rating">
+        <button [routerLink]="['/candidate']"  mat-mini-fab color="primary">
+          <mat-icon>create</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #rating>
+        <button (click)="onVote(1)" mat-mini-fab color="primary" [matBadge]="0" matBadgePosition="above after" matBadgeColor="accent">
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+        <button (click)="onVote(-1)" mat-mini-fab color="accent">
+          <mat-icon>thumb_down</mat-icon>
+        </button>
+      </ng-template>
+    </mat-card-actions>
+
     <!--<mat-card-actions class="ml-auto pr-2" *ngIf="!(auth.user$ | async)">-->
       <!--<button (click)="notLoggedIn()" mat-mini-fab>-->
         <!--<mat-icon>thumb_up</mat-icon>-->
