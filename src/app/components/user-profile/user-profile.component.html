@@ -1,7 +1,21 @@
 <div *ngIf="auth.user$ | async as user">
   <h3 class="my-5">Hi {{ user.displayName }}!</h3>
+  <p>
+    You have {{ maxVotesPerUser - user.totalVotes }} votes left.
+  </p>
+  <ng-container *ngIf="user.totalVotes > 0">
+    <p>
+      So far you voted for -
+    </p>
+    <ul>
+      <li *ngFor="let candidate of candidates$ | async">
+        {{ candidate.user.displayName }} ({{ candidate.title }}): {{ candidate.votes[user.uid] }} votes
+      </li>
+    </ul>
+  </ng-container>
+
   <button [routerLink]="['/candidate']"
-          class="mb-3"
+          class="my-3"
           mat-raised-button
           color="primary">Edit Your Candidacy!</button>
   <br/>
