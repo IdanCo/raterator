@@ -9,12 +9,12 @@ import { Candidate } from '../../types/candidate.model';
   styleUrls: ['./candidate-list.component.scss']
 })
 export class CandidateListComponent implements OnInit {
-  candidates: Observable<Candidate[]>;
+  candidates$: Observable<Candidate[]>;
 
   constructor(private db: AngularFirestore) { }
 
   ngOnInit() {
-    this.candidates = this.db.collection<Candidate>(
+    this.candidates$ = this.db.collection<Candidate>(
       'candidates',
       ref => ref.orderBy('lastUpdate', 'desc')
     )

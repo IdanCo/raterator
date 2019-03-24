@@ -1,4 +1,4 @@
-<div *ngFor="let candidate of candidates | async"
+<div *ngFor="let candidate of candidates$ | async"
      class="mb-4">
   <app-candidate [candidate]="candidate"></app-candidate>
 </div>
