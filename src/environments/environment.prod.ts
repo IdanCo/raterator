@@ -7,5 +7,6 @@ export const environment = {
     projectId: 'raterator-f33d5',
     storageBucket: 'raterator-f33d5.appspot.com',
     messagingSenderId: '269693654950'
-  }
+  },
+  maxVotesPerUser: 12,
 };

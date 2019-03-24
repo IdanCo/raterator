@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Candidate } from '../types/candidate.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,11 @@ export class VoteService {
   setVote(candidate: Candidate, user: User, vote: number) {
     if (!user) {
       this.snackBar.open('Please login to vote');
+      return;
+    }
+
+    if ((user.totalVotes + vote) > environment.maxVotesPerUser) {
+      this.snackBar.open('Maximum votes reached. Consider down voting...');
       return;
     }
 
