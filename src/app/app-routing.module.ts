@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CandidateEditComponent } from './components/candidate-edit/candidate-edit.component';
+import { CandidateListComponent } from './components/candidate-list/candidate-list.component';
 
 const routes: Routes = [
+  {
+    path: 'list',
+    component: CandidateListComponent,
+  },
   {
     path: 'user-profile',
     component: UserProfileComponent,
@@ -11,6 +16,10 @@ const routes: Routes = [
   {
     path: 'candidate',
     component: CandidateEditComponent,
+  },
+  { path: '',
+    redirectTo: '/list',
+    pathMatch: 'full'
   },
 ];
 

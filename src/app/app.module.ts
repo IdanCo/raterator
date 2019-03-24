@@ -16,13 +16,17 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { CandidateEditComponent } from './components/candidate-edit/candidate-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSpinner } from '@angular/material';
+import { CandidateListComponent } from './components/candidate-list/candidate-list.component';
+import { CandidateComponent } from './components/candidate/candidate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     UserProfileComponent,
-    CandidateEditComponent
+    CandidateEditComponent,
+    CandidateListComponent,
+    CandidateComponent
   ],
   imports: [
     BrowserModule,
