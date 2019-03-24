@@ -25,7 +25,7 @@ export class CandidateEditComponent implements OnInit {
               private router: Router,
               private db: AngularFirestore,
               private storage: AngularFireStorage,
-              private auth: AuthService,
+              public auth: AuthService,
               private spinner: SpinnerService) {
     this.buildForm();
   }
