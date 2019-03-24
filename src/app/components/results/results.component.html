@@ -1,0 +1,9 @@
+<h1 class="mb-3">
+  Results
+</h1>
+
+<ol>
+  <li *ngFor="let candidate of candidates$ | async">
+    {{ candidate.user.displayName }} ({{ candidate.title }}): {{ candidate.totalVotes }} votes
+  </li>
+</ol>

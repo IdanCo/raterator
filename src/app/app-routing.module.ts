@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CandidateEditComponent } from './components/candidate-edit/candidate-edit.component';
 import { CandidateListComponent } from './components/candidate-list/candidate-list.component';
+import { ResultsComponent } from './components/results/results.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'candidate',
     component: CandidateEditComponent,
+  },
+  {
+    path: 'results',
+    component: ResultsComponent,
   },
   { path: '',
     redirectTo: '/list',

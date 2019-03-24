@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSpinner } from '@angular/material';
 import { CandidateListComponent } from './components/candidate-list/candidate-list.component';
 import { CandidateComponent } from './components/candidate/candidate.component';
+import { ResultsComponent } from './components/results/results.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CandidateComponent } from './components/candidate/candidate.component';
     UserProfileComponent,
     CandidateEditComponent,
     CandidateListComponent,
-    CandidateComponent
+    CandidateComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
