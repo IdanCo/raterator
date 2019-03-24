@@ -15,6 +15,7 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CandidateEditComponent } from './components/candidate-edit/candidate-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSpinner } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
   ],
   providers: [AuthService],
+  entryComponents: [ MatSpinner ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,3 +10,12 @@ body {
   background: #303030;
   color: white
 }
+
+.dark-backdrop {
+  background: #000;
+  opacity: 0.75 !important;
+}
+
+*:focus {
+  outline:none !important;
+}

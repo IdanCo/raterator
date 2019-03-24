@@ -9,6 +9,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Candidate } from '../../types/candidate.model';
 import { Observable } from 'rxjs';
+import { SpinnerService } from '../../services/spinner.service';
 
 
 @Component({
@@ -24,14 +25,18 @@ export class CandidateEditComponent implements OnInit {
               private router: Router,
               private db: AngularFirestore,
               private storage: AngularFireStorage,
-              private auth: AuthService) {
+              private auth: AuthService,
+              private spinner: SpinnerService) {
     this.buildForm();
   }
 
   ngOnInit() {
+    this.spinner.showSpinner();
+
     this.candidate$ = this.auth.user$.pipe(
       switchMap(user => this.db.doc<Candidate>(`candidates/${user.uid}`).valueChanges()),
       tap(candidate => {
+        this.spinner.stopSpinner();
         if (candidate) {
           this.formGroup.patchValue(candidate)
         } else {
@@ -59,6 +64,8 @@ export class CandidateEditComponent implements OnInit {
   async onSubmit(formGroup: FormGroup) {
     if (!formGroup.valid) return;
 
+    this.spinner.showSpinner();
+
     const candidatesCollection = this.db.collection<Candidate>('candidates');
     const candidate: Candidate = {
       title: this.formGroup.value.title,
@@ -75,7 +82,10 @@ export class CandidateEditComponent implements OnInit {
     }
 
     candidatesCollection.doc(this.auth.user.uid).set(candidate)
-      .then(() => this.router.navigate(['/']));
+      .then(() => {
+        this.spinner.stopSpinner();
+        this.router.navigate(['/'])
+      });
   }
 
   removeExistingImage() {
