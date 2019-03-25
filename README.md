@@ -3,7 +3,7 @@
 
 **DEMO:**  https://raterator-f33d5.firebaseapp.com
 
-This app allows users to upload their own photo and vote for others.
+This [Angular](https://angular.io/) app allows users to upload their own photo and vote for others.
 
 It was originally developed for the costume context of UVEye's legendary Purim party, but we though you might enjoy it as well, so we made it open source!
 
