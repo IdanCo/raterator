@@ -1,7 +1,7 @@
 <div *ngIf="auth.user$ | async as user">
   <h3 class="my-5">Hi {{ user.displayName }}!</h3>
   <p>
-    You have {{ maxVotesPerUser - user.totalVotes }} votes left.
+    You have {{ maxVotesPerUser - (user.totalVotes || 0) }} votes left.
   </p>
   <ng-container *ngIf="user.totalVotes > 0">
     <p>

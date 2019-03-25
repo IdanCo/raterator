@@ -4,7 +4,7 @@
   </a>
   <a *ngIf="(auth.user$ | async) as user; else loggedOut"
      [routerLink]="'/user-profile'"
-     [matBadge]="maxVotesPerUser - user.totalVotes"
+     [matBadge]="maxVotesPerUser - (user.totalVotes || 0)"
      matBadgeColor="accent">
     <img class="avatar" [src]="user.photoURL">
   </a>

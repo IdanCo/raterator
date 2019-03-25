@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { switchMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { auth } from 'firebase';
+import { User } from '../types/user.model';
 
 @Injectable({
   providedIn: 'root'

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Candidate } from '../types/candidate.model';
+import { User } from '../types/user.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
