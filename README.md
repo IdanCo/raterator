@@ -7,7 +7,7 @@ This app allows users to upload their own photo and vote for others.
 
 It was originally developed for the costume context of UVEye's legendary Purim party, but we though you might enjoy it as well, so we made it open source!
 
-![screen shot](/ScreenShot.jpg=250x)
+![screen shot](/ScreenShot.jpg =250x)
 
 ## Features
 
